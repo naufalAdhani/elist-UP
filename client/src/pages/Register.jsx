@@ -1,17 +1,65 @@
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
-function Register() {
+export default function Register() {
   const navigate = useNavigate();
+
+  // State untuk menyimpan input dan error
+  const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' });
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    // Hapus error saat user mulai mengetik
+    if (errors[e.target.name]) {
+      setErrors({ ...errors, [e.target.name]: '' });
+    }
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    
+    // Validasi Email
+    if (!formData.email) {
+      newErrors.email = "Email tidak boleh kosong";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Format email tidak valid";
+    }
+    
+    // Validasi Password
+    if (!formData.password) {
+      newErrors.password = "Password tidak boleh kosong";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password minimal 6 karakter";
+    }
+    
+    // Validasi Confirm Password
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = "Konfirmasi password tidak boleh kosong";
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Password tidak cocok";
+    }
+    
+    return newErrors;
+  };
 
   const handleRegister = (e) => {
     e.preventDefault();
-    navigate('/login');
+    const validationErrors = validate();
+    
+    if (Object.keys(validationErrors).length > 0) {
+      // Jika ada error, tampilkan
+      setErrors(validationErrors);
+    } else {
+      // Jika sukses, lanjut ke halaman login
+      alert("Registrasi berhasil! Silakan login.");
+      navigate('/login');
+    }
   };
 
   return (
     <div className="min-h-screen bg-white flex flex-col font-sans">
-
       {/* Logo - pojok kiri atas, hanya desktop */}
       <div className="hidden md:flex items-center gap-0 p-8">
         <img src={logo} alt="Logo" className="w-14 h-14" />
@@ -21,7 +69,6 @@ function Register() {
       {/* Form */}
       <div className="flex-1 flex items-center justify-center px-6 py-10 md:py-0">
         <div className="w-full max-w-sm">
-
           {/* Logo - tengah, hanya mobile */}
           <div className="flex md:hidden items-center justify-center gap-0 mb-8 w-full">
             <img src={logo} alt="Logo" className="w-16 h-16" />
@@ -35,27 +82,42 @@ function Register() {
               <label className="text-xs font-medium text-gray-700 ml-1">Email</label>
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="Enter your email"
-                className="w-full px-4 py-3 bg-gray-100 border-transparent rounded-md text-sm focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                className={`w-full px-4 py-3 bg-gray-100 border rounded-md text-sm outline-none transition-all focus:bg-white focus:ring-2 
+                  ${errors.email ? 'border-red-500 focus:ring-red-500' : 'border-transparent focus:border-indigo-500 focus:ring-indigo-500'}`}
               />
+              {errors.email && <span className="text-[10px] text-red-500 ml-1 mt-0.5">{errors.email}</span>}
             </div>
 
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium text-gray-700 ml-1">Password</label>
               <input
                 type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 placeholder="Enter your password"
-                className="w-full px-4 py-3 bg-gray-100 border-transparent rounded-md text-sm focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                className={`w-full px-4 py-3 bg-gray-100 border rounded-md text-sm outline-none transition-all focus:bg-white focus:ring-2 
+                  ${errors.password ? 'border-red-500 focus:ring-red-500' : 'border-transparent focus:border-indigo-500 focus:ring-indigo-500'}`}
               />
+              {errors.password && <span className="text-[10px] text-red-500 ml-1 mt-0.5">{errors.password}</span>}
             </div>
 
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium text-gray-700 ml-1">Confirm Password</label>
               <input
                 type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
                 placeholder="Confirm your password"
-                className="w-full px-4 py-3 bg-gray-100 border-transparent rounded-md text-sm focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                className={`w-full px-4 py-3 bg-gray-100 border rounded-md text-sm outline-none transition-all focus:bg-white focus:ring-2 
+                  ${errors.confirmPassword ? 'border-red-500 focus:ring-red-500' : 'border-transparent focus:border-indigo-500 focus:ring-indigo-500'}`}
               />
+              {errors.confirmPassword && <span className="text-[10px] text-red-500 ml-1 mt-0.5">{errors.confirmPassword}</span>}
             </div>
 
             <div className="flex items-center gap-2 mt-2">
@@ -82,12 +144,8 @@ function Register() {
               Already have an account? Login
             </Link>
           </div>
-
         </div>
       </div>
-
     </div>
   );
 }
-
-export default Register;
