@@ -1,4 +1,5 @@
 import { useState } from "react";
+import logo from "../assets/logo.png";
 
 const INITIAL_BOARDS = [
   { id: 1, name: "Projek 1", color: "bg-violet-300" },
@@ -50,11 +51,9 @@ export default function ElistHome() {
         </button>
 
         {/* Logo */}
-        <div className="flex items-center gap-2 w-28 flex-shrink-0">
-          <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center font-bold text-sm text-violet-700">
-            E
-          </div>
-          <span className="text-white font-semibold text-base hidden sm:block">Elist</span>
+        <div className="flex items-center gap-1 w-28 flex-shrink-0">
+          <img src={logo} alt="Logo" className="w-9 h-9" />
+          <span className="text-white font-semibold text-base hidden sm:block -ml-1">Elist</span>
         </div>
 
         {/* Search - center */}
@@ -119,7 +118,7 @@ export default function ElistHome() {
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
         `}>
-          <p className="font-semibold text-violet-900 text-sm mb-3 px-2">Elist</p>
+          
 
           {[
             {
@@ -180,7 +179,7 @@ export default function ElistHome() {
               className="group cursor-pointer"
               onClick={(e) => { e.stopPropagation(); setModalOpen(true); }}
             >
-              <div className="bg-gray-50 rounded-xl h-32 sm:h-36 border-2 border-dashed border-gray-200 flex items-center justify-content-center justify-center transition-colors group-hover:bg-gray-100">
+              <div className="bg-gray-50 rounded-xl h-32 sm:h-36 border-2 border-dashed border-gray-200 flex items-center justify-center transition-colors group-hover:bg-gray-100">
                 <span className="text-sm text-gray-400">+ Create new</span>
               </div>
             </div>

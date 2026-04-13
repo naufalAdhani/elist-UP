@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import logo from "../assets/logo.png";
 
 function ChevronLeft({open}){return <svg xmlns="http://www.w3.org/2000/svg" width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" style={{transition:'transform 0.3s',transform:open?'rotate(0deg)':'rotate(180deg)'}}><polyline points="15 18 9 12 15 6"/></svg>;}
 function TrashIcon(){return <svg xmlns="http://www.w3.org/2000/svg" width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>;}
@@ -138,10 +139,10 @@ export default function App() {
 
       {/* TOPBAR */}
       <div className="flex items-center justify-between bg-purple-400 px-4 py-2.5 text-white flex-shrink-0 z-20">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-white text-purple-600 rounded-lg flex items-center justify-center font-bold text-sm">E</div>
-          <span className="font-bold text-sm">Elist</span>
-        </div>
+  <div className="flex items-center gap-0 w-28 flex-shrink-0">
+    <img src={logo} alt="Logo" className="w-15 h-15" />
+    <span className="font-bold text-base -ml-2">Elist</span>
+  </div>
         <div className="relative flex-1 max-w-xs mx-4">
           <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none flex"><SearchIcon/></div>
           <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search..." className="si w-full pl-9 pr-3 py-2 rounded-full border border-white/30 text-sm outline-none bg-white/20 text-white"/>
@@ -170,7 +171,6 @@ export default function App() {
           <button onClick={()=>setSidebarOpen(!sidebarOpen)} className="absolute -right-2.5 top-1/2 -translate-y-1/2 bg-white border-none rounded-full w-5 h-5 flex items-center justify-center cursor-pointer shadow-md z-10 p-0">
             <ChevronLeft open={sidebarOpen}/>
           </button>
-          {sidebarOpen && <h1 className="font-bold text-sm mb-4 text-purple-900 whitespace-nowrap">Elist</h1>}
           {!sidebarOpen && <div className="h-7 mb-4"/>}
           <div className="flex flex-col gap-1">
             <div onClick={()=>setActiveMenu('boards')} className={`flex items-center gap-2.5 p-2 rounded-lg cursor-pointer text-sm whitespace-nowrap text-purple-900 transition-colors ${activeMenu==='boards'?'bg-white font-semibold':'hover:bg-purple-200'}`}>

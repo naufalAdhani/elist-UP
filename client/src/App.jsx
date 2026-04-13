@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Board from "./pages/Board";
 import HomeLogin from "./pages/HomeLogin";
+import Logout from "./pages/Logout";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/Board" element={<Board />} />
       <Route path="/HomeLogin" element={<HomeLogin />} />
+      <Route path="/Logout" element={<Logout />} />
     </Routes>
   );
 }
