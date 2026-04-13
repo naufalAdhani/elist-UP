@@ -10,8 +10,7 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4
       },
       name: {
-        type: Sequelize.STRING,
-        length: 100
+        type: Sequelize.STRING(100)
       },
       boardId: {
         type: Sequelize.UUID,

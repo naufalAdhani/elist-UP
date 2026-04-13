@@ -17,12 +17,25 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
+    id: { type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
+    name: { type: DataTypes.STRING(50),
+      allowNull: false,
+      unique: true
+     },
+    email: { type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+     },
+    password: { type: DataTypes.STRING,
+      allowNull: false
+     }
   }, {
     sequelize,
     modelName: 'User',
+    tableName: 'users',
+    freezeTableName: true
   });
   return User;
 };
