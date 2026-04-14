@@ -1,12 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
+import { register } from '../api/authapi';
 
 function Register() {
   const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
+     try {
+    await register({ email, password });
     navigate('/login');
+  } catch (err) {
+    alert("Register gagal");
+  }
   };
 
   return (

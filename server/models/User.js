@@ -5,20 +5,22 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      User.hasMany(models.board, {
+      User.hasMany(models.Board, {
         foreignKey: 'userId',
         as: 'boards'
       })
 
-      User.hasMany(models.boardMember, {
+      User.hasMany(models.BoardMember, {
         foreignKey: 'userId',
         as: 'boardMembers'
       })
     }
   }
   User.init({
-    id: { type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
     },
     name: { type: DataTypes.STRING(50),
       allowNull: false,
