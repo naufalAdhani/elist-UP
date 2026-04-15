@@ -15,12 +15,19 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // routes
-app.use('/api/auth', authRoutes);
-app.use('/api/boards', boardRoutes);
-app.use('/api/lists', listRoutes);
-app.use('/api/cards', cardRoutes);
+app.use('/auth', authRoutes);
+app.use('/boards', boardRoutes);
+app.use('/list', listRoutes);
+app.use('/card', cardRoutes);
+
+app.use('/', (req, res) => {
+  res.send({
+    message: 'Home Page'
+  })
+});
 
 const PORT = process.env.PORT || 5000;
 

@@ -1,8 +1,12 @@
 const router = require('express').Router();
-const card = require('../controllers/cardController');
+const ctrl = require('../controllers/cardController');
+const fakeAuth = require('../middleware/fakeAuth');
 
-router.post('/', card.createCard);
-router.put('/:id', card.updateCard);
-router.delete('/:id', card.deleteCard);
+router.use(fakeAuth);
+
+router.post('/', ctrl.createCard);
+router.get('/list/:listId', ctrl.getCards);
+router.put('/:id', ctrl.updateCard);
+router.delete('/:id', ctrl.deleteCard);
 
 module.exports = router;

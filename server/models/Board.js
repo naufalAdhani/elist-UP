@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Board.belongsTo(models.User, {
         foreignKey: 'userId',
-        as: 'user'
+        as: 'users'
       })
 
       Board.hasMany(models.List, {

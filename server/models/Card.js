@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Card.init({
     task: DataTypes.STRING,
-    listId: DataTypes.UUID,
+    listId: DataTypes.INTEGER,
     pos: DataTypes.INTEGER
   }, {
     sequelize,

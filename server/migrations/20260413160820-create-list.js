@@ -6,14 +6,14 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
+        type: Sequelize.INTEGER,
+        autoIncrement: true
       },
       name: {
         type: Sequelize.STRING(100)
       },
       boardId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         references: {
           model: 'boards',
           key: 'id'

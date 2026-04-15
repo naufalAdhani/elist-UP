@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   BoardMember.init({
     userId: DataTypes.UUID,
-    boardId: DataTypes.UUID,
+    boardId: DataTypes.INTEGER,
     role: DataTypes.STRING
   }, {
     sequelize,

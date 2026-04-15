@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       List.belongsTo(models.Board, {
         foreignKey: 'boardId',
-        as: 'board'
+        as: 'boards'
       })
 
       List.hasMany(models.Card, {
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   List.init({
     name: DataTypes.STRING,
-    boardId: DataTypes.UUID,
+    boardId: DataTypes.INTEGER,
     pos: DataTypes.INTEGER
   }, {
     sequelize,

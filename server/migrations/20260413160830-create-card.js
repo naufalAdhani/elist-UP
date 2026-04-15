@@ -6,14 +6,14 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
+        type: Sequelize.INTEGER,
+        autoIncrement: true
       },
       task: {
         type: Sequelize.STRING(100)
       },
       listId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         references: {
           model: 'lists',
           key: 'id'

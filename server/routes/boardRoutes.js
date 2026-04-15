@@ -1,29 +1,14 @@
-const express = require('express');
-const router = express.Router();
-const { Board, List, Card } = require('../models');
+const router = require('express').Router();
+const ctrl = require('../controllers/boardController');
+const fakeAuth = require('../middleware/fakeAuth');
 
+router.use(fakeAuth);
 
-router.get('/', async (req, res) => {
-  const boards = await Board.findAll({
-    include: {
-      model: List,
-      as: 'lists',
-      include: {
-        model: Card,
-        as: 'cards'
-      }
-    }
-  });
-
-  res.json(boards);
-});
-
-
-router.post('/', async (req, res) => {
-  const { title, userId } = req.body;
-
-  const board = await Board.create({ title, userId });
-  res.json(board);
-});
+router.post('/', ctrl.createBoard);
+router.get('/', ctrl.getBoards);
+router.get('/:id', ctrl.getBoardById);
+router.get('/:id/detail', ctrl.getBoardDetail);
+router.put('/:id', ctrl.updateBoard);
+router.delete('/:id', ctrl.deleteBoard);
 
 module.exports = router;
