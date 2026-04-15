@@ -1,14 +1,17 @@
-import api from "./axios";
+import axios from "axios";
 
-export const register = (data) => {
-  return api.post("/auth/register", data);
-};
+const API = axios.create({
+  baseURL: "http://localhost:5000/api/auth",
+});
+
 
 export const login = async (data) => {
-  const res = await api.post("/auth/login", data);
+  const res = await API.post("/login", data);
+  return res.data; 
+};
 
-  
-  localStorage.setItem("token", res.data.token);
 
+export const register = async (data) => {
+  const res = await API.post("/register", data); 
   return res.data;
 };

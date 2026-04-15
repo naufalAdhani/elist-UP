@@ -1,15 +1,22 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import logo from '../assets/logo.png';
 import { login } from '../api/authapi';
 
 function Login() {
   const navigate = useNavigate();
 
+    const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      await login({ email, password });
+      const res = await login({ email, password });
+
+       localStorage.setItem("token", res.token);
+       
     navigate('/homelogin');
   } catch (err) {
     alert("Login gagal");
