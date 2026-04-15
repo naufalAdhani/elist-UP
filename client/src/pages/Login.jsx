@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
+import { login } from '../api/authapi';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -32,17 +33,24 @@ export default function Login() {
     return newErrors;
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    
-    if (Object.keys(validationErrors).length > 0) {
-      // Jika ada error, tampilkan
-      setErrors(validationErrors);
-    } else {
-      // Jika sukses, lanjut ke halaman dasbor
+  const handleLogin = async (e) => {
+  e.preventDefault();
+
+  const validationErrors = validate();
+
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+  } else {
+    try {
+      await login({ 
+        email: formData.email, 
+        password: formData.password 
+      });
       navigate('/homelogin');
+    } catch (err) {
+      alert("Login gagal");
     }
+  }
   };
 
   return (

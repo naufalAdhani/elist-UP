@@ -1,61 +1,66 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
+import { register } from '../api/authapi';
 
 export default function Register() {
   const navigate = useNavigate();
 
-  // State untuk menyimpan input dan error
-  const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' });
-  const [errors, setErrors] = useState({});
+ // State untuk menyimpan input dan error
+const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' });
+const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    // Hapus error saat user mulai mengetik
-    if (errors[e.target.name]) {
-      setErrors({ ...errors, [e.target.name]: '' });
-    }
-  };
+const handleChange = (e) => {
+  setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const validate = () => {
-    const newErrors = {};
-    
-    // Validasi Email
-    if (!formData.email) {
-      newErrors.email = "Email tidak boleh kosong";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Format email tidak valid";
-    }
-    
-    // Validasi Password
-    if (!formData.password) {
-      newErrors.password = "Password tidak boleh kosong";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password minimal 6 karakter";
-    }
-    
-    // Validasi Confirm Password
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = "Konfirmasi password tidak boleh kosong";
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Password tidak cocok";
-    }
-    
-    return newErrors;
-  };
+  if (errors[e.target.name]) {
+    setErrors({ ...errors, [e.target.name]: '' });
+  }
+};
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    
-    if (Object.keys(validationErrors).length > 0) {
-      // Jika ada error, tampilkan
-      setErrors(validationErrors);
-    } else {
-      // Jika sukses, lanjut ke halaman login
+const validate = () => {
+  const newErrors = {};
+  
+  if (!formData.email) {
+    newErrors.email = "Email tidak boleh kosong";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    newErrors.email = "Format email tidak valid";
+  }
+  
+  if (!formData.password) {
+    newErrors.password = "Password tidak boleh kosong";
+  } else if (formData.password.length < 6) {
+    newErrors.password = "Password minimal 6 karakter";
+  }
+  
+  if (!formData.confirmPassword) {
+    newErrors.confirmPassword = "Konfirmasi password tidak boleh kosong";
+  } else if (formData.password !== formData.confirmPassword) {
+    newErrors.confirmPassword = "Password tidak cocok";
+  }
+  
+  return newErrors;
+};
+
+const handleRegister = async (e) => {
+  e.preventDefault();
+
+  const validationErrors = validate();
+
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+  } else {
+    try {
+      await register({
+        email: formData.email,
+        password: formData.password
+      });
       alert("Registrasi berhasil! Silakan login.");
       navigate('/login');
+    } catch (err) {
+      alert("Register gagal");
     }
+  }
   };
 
   return (
