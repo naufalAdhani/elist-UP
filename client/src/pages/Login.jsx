@@ -1,12 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
+import { login } from '../api/authapi';
 
 function Login() {
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+
+    try {
+      await login({ email, password });
     navigate('/homelogin');
+  } catch (err) {
+    alert("Login gagal");
+  }
   };
 
   return (

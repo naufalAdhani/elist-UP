@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Card extends Model {
     static associate(models) {
-      Card.belongsTo(models.lists, {
+      Card.belongsTo(models.List, {
         foreignKey: 'listId',
         as: 'list'
       })
